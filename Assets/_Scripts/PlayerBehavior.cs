@@ -4,26 +4,34 @@ using UnityEngine;
 
 public class PlayerBehavior : MonoBehaviour
 {
-    public float movementForce = 5;
-    public Rigidbody rigidbody;
+    public CharacterController controller;
+
+    public float maxSpeed = 10f;
+    public float gravity = 30f;
+    public float jumpHeight = 3f;
+    public bool isGrounded;
+
+    public Transform groundCheck;
+    public float groundRadius = 0.5f;
+
+    public LayerMask groundMask;
 
     // Start is called before the first frame update
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        controller = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetAxisRaw("Horizontal") > 0)
-        {
-            rigidbody.AddForce(Vector3.right * movementForce);
-        }
+ 
+    }
 
-        if (Input.GetAxisRaw("Horizontal") < 0)
-        {
-            rigidbody.AddForce(Vector3.left * movementForce);
-        }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.white;
+
+        Gizmos.DrawWireSphere(groundCheck.position, groundRadius);
     }
 }
